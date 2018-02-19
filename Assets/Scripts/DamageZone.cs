@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageZone : MonoBehaviour {
+	public Paddle paddle;
 
 	void OnTriggerEnter2D(Collider2D col) {
 		Ball ball = col.GetComponent<Ball>();
@@ -12,7 +13,8 @@ public class DamageZone : MonoBehaviour {
 				GameCamera.Instance.transform.position.x,
 				GameCamera.Instance.transform.position.y
 			);
-			ball.LaunchTowardsAngle(Random.Range(45,135),5);
+			ball.Stop();
+			paddle.ballToLaunch = ball;
 		}
 	}
 }

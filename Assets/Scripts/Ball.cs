@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using caterative.math;
 
 public class Ball : MonoBehaviour
 {
@@ -17,17 +18,21 @@ public class Ball : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         if (launchAfterStart)
         {
-            LaunchTowardsAngle(initialDirection,speedFactor);
+            LaunchTowardsAngle(initialDirection);
         }
     }
 
-    public void LaunchTowardsAngle(float direction, float initialFactor)
+    public void LaunchTowardsAngle(float direction)
     {
         body.velocity = Vector2.zero;
-        Vector2 directionVector = RotateVector(Vector2.right,direction);
-        constantVelocity = (directionVector * initialFactor);
+        Vector2 directionVector = Transformation.RotateVector(Vector2.right,direction);
+        constantVelocity = (directionVector * speedFactor);
         constantVelocityMagnitude = constantVelocity.magnitude;
         body.velocity = constantVelocity;
+    }
+
+    public void Stop() {
+        body.velocity = Vector2.zero;
     }
 
     void Update() {
@@ -39,17 +44,5 @@ public class Ball : MonoBehaviour
 
     void LateUpdate() {
         body.velocity = constantVelocity;
-    }
-
-    private Vector2 RotateVector(Vector2 vector, float angle) {
-        Vector2 rotatedVector = vector;
-        float _x = rotatedVector.x;
-        float _y = rotatedVector.y;
-        float angleInRadian = (angle/360) * (2 * Mathf.PI);
-        float _cos = Mathf.Cos(angleInRadian);
-        float _sin = Mathf.Sin(angleInRadian);
-        rotatedVector.x = _x * _cos - _y * _sin;
-        rotatedVector.y = _x * _sin + _y * _cos;
-        return rotatedVector;
     }
 }
