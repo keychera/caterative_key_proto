@@ -12,7 +12,7 @@ public class GameCamera : Singleton<GameCamera>
 
     void OnEnable()
     {
-        BrickEventManager.OnBrickDestroy += UpdateRelativePositionsToBrick;
+        BrickManager.OnBrickDestroy += UpdateRelativePositionsToBrick;
     }
 
     void Update()
@@ -50,6 +50,6 @@ public class GameCamera : Singleton<GameCamera>
 
     void OnDisable()
     {
-        BrickEventManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
+        BrickManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
     }
 }

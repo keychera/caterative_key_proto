@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrickEventManager : Singleton<BrickEventManager>
+public class BrickManager : Singleton<BrickManager>
 {
     public delegate void BrickEvent(Brick whichBrick);
     public static event BrickEvent OnBrickDestroy;

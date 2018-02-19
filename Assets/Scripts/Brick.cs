@@ -5,10 +5,17 @@ using UnityEngine;
 public class Brick : MonoBehaviour
 {
     public bool active;
+    Rigidbody2D body;
+
+    void Awake() {
+        body = GetComponent<Rigidbody2D>();
+    }
 
     void Start()
     {
 		active = true;
+        body.velocity = Vector2.down * 0.2f;
+        transform.localRotation = Quaternion.Euler(0,0,Random.Range(45,135));
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -22,8 +29,12 @@ public class Brick : MonoBehaviour
 
     public void Destroy()
     {
-        transform.position = Vector2.up * 10000;
-		active = false;
-        BrickEventManager.Instance.InvokeOnBrickDestroy(this);
+        transform.position = new Vector2(
+            Random.Range(-1.5f,1.5f),
+            Random.Range(36f,45f)
+        );
+        transform.localRotation = Quaternion.Euler(0,0,Random.Range(45,135));
+        body.velocity = Vector2.down * 0.2f;
+        BrickManager.Instance.InvokeOnBrickDestroy(this);
     }
 }
