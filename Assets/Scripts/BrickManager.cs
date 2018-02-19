@@ -31,6 +31,7 @@ public class BrickManager : Singleton<BrickManager>
                 }
             }
         }
+        closestBrick.Redify();
         return closestBrick;
     }
 

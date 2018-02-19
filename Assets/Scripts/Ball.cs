@@ -54,7 +54,12 @@ public class Ball : MonoBehaviour
         if (body.velocity.magnitude < 1f) {
             Deactivate();
         }
+        Brick brick = collision.gameObject.GetComponent<Brick>();
+        if (brick != null && brick.red) {
+            GameManager.Instance.ModifyPlayerHelth(15);
+        }
     }
+
 /* 
 for constant velocity
     void Update() {

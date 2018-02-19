@@ -22,5 +22,6 @@ public class Health : MonoBehaviour
 
 	public void ModifyHealth(int modifier) {
 		health += modifier;
+        if (health > maxHealth) health = maxHealth;
 	}
 }

@@ -44,8 +44,8 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void DamagePlayer(int damage)
+    public void ModifyPlayerHelth(int damage)
     {
-        playerHealth.ModifyHealth(-1 * damage);
+        playerHealth.ModifyHealth(damage);
     }
 }
