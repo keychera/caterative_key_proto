@@ -11,6 +11,7 @@ public class Brick : MonoBehaviour {
 	}
 
 	public void Destroy() {
-		transform.position = Vector2.right * 100;
+		transform.position = Vector2.up * 10000;
+		BrickEventManager.Instance.InvokeOnBrickDestroy(this);
 	}
 }
