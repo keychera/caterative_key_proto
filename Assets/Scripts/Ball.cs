@@ -15,10 +15,13 @@ public class Ball : MonoBehaviour
     public int damage;
     private float slowFactor = 0.1f;
     public bool active = false;
+    TrailRenderer trail;
 
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        trail = GetComponent<TrailRenderer>();
+        trail.enabled = false;
         if (launchAfterStart)
         {
             LaunchTowardsAngle(initialDirection);
@@ -28,30 +31,28 @@ public class Ball : MonoBehaviour
     public void LaunchTowardsAngle(float direction)
     {
         active = true;
+        trail.Clear();
+        trail.enabled = true;
         body.velocity = Vector2.zero;
         Vector2 directionVector = Transformation.RotateVector(Vector2.right,direction);
         constantVelocity = (directionVector * speedFactor);
         constantVelocityMagnitude = constantVelocity.magnitude;
         body.velocity = constantVelocity;
+        trail.time = body.velocity.magnitude * 0.25f;
     }
 
     public void Deactivate() {
         active = false;
+        trail.enabled = false;
         body.velocity = Vector2.zero;
         transform.position = Vector2.right * 1000;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        trail.time = body.velocity.magnitude * 0.25f;
         if (body.velocity.magnitude < 1f) {
             Deactivate();
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision) {
-        if (collision.collider.GetComponent<Paddle>()) {
-            constantVelocity = body.velocity;
-            body.velocity = constantVelocity.normalized * (speedFactor);
         }
     }
 /* 

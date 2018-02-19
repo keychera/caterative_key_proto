@@ -7,9 +7,13 @@ public class GameManager : Singleton<GameManager>
 {
     Health playerHealth;
     Paddle paddle;
+    public int counter;
+    public delegate void CounterEvent(int counter);
+    public static event CounterEvent OnChangeCounter;
 
     void Start()
     {
+        counter = 0;
         playerHealth = FindObjectOfType<Health>();
         paddle = FindObjectOfType<Paddle>();
         StartCoroutine(LaunchinBallRoutine());
@@ -20,11 +24,22 @@ public class GameManager : Singleton<GameManager>
     {
         while (true)
         {
-            yield return new WaitForSeconds(3f);
-            Debug.Log("checking Ball!");
-            if (paddle.ballToLaunch == null)
+            yield return new WaitForSeconds(0.64f);
+            if (counter < 4)
             {
-                paddle.ballToLaunch = BallManager.Instance.GetAvailableBall();
+                counter++;
+            }
+            else
+            {
+                counter = 0;
+                if (paddle.ballToLaunch == null)
+                {
+                    paddle.ballToLaunch = BallManager.Instance.GetAvailableBall();
+                }
+            }
+            if (OnChangeCounter != null)
+            {
+                OnChangeCounter(counter);
             }
         }
     }

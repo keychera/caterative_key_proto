@@ -31,7 +31,10 @@ public class Brick : MonoBehaviour
     {
         transform.position = new Vector2(
             Random.Range(-1.5f,1.5f),
-            Random.Range(36f,45f)
+            Random.Range(
+                36f * GameCamera.Instance.transform.position.y,
+                45f + GameCamera.Instance.transform.position.y * 1.5f
+            )
         );
         transform.localRotation = Quaternion.Euler(0,0,Random.Range(45,135));
         body.velocity = Vector2.down * 0.2f;

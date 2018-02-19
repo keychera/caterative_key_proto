@@ -15,15 +15,20 @@ public class GameCamera : Singleton<GameCamera>
         BrickManager.OnBrickDestroy += UpdateRelativePositionsToBrick;
     }
 
+    void OnDisable()
+    {
+        BrickManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
+    }
+
     void Update()
     {
         float partialDistanceToTarget = Vector2.Distance(transform.position, targetPosition) * 0.1f;
-        float distancePerFrame = 
-            (partialDistanceToTarget > maxDistancePerFrame)?
+        float distancePerFrame =
+            (partialDistanceToTarget > maxDistancePerFrame) ?
             maxDistancePerFrame : partialDistanceToTarget
         ;
         transform.position = Vector3.Lerp(
-            transform.position, targetPosition, 
+            transform.position, targetPosition,
             distancePerFrame * Time.deltaTime
         );
         for (int i = 0; i < objectsRelativeToCamera.Count; i++)
@@ -46,10 +51,5 @@ public class GameCamera : Singleton<GameCamera>
         {
             targetPosition = Vector2.right;
         }
-    }
-
-    void OnDisable()
-    {
-        BrickManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
     }
 }
