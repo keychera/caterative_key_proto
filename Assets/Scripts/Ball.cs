@@ -32,7 +32,7 @@ public class Ball : MonoBehaviour
 
     void Update() {
         constantVelocity = body.velocity;
-        if (constantVelocity.magnitude > constantVelocityMagnitude) {
+        if (constantVelocity.magnitude != constantVelocityMagnitude) {
             constantVelocity = constantVelocity.normalized * speedFactor;
         }
     }

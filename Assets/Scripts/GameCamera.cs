@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameCamera : MonoBehaviour
+public class GameCamera : Singleton<GameCamera>
 {
     public List<GameObject> objectsRelativeToCamera;
     public Vector2[] relativeDistancesOfObjects;

@@ -8,7 +8,10 @@ public class DamageZone : MonoBehaviour {
 		Ball ball = col.GetComponent<Ball>();
 		if (ball != null) {
 			GameManager.Instance.DamagePlayer(10);
-			ball.transform.position = Vector2.zero;
+			ball.transform.position = new Vector2(
+				GameCamera.Instance.transform.position.x,
+				GameCamera.Instance.transform.position.y
+			);
 			ball.LaunchTowardsAngle(Random.Range(45,135),5);
 		}
 	}
