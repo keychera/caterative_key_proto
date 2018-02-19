@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     public float speedFactor = 5;
     private Vector2 constantVelocity;
     private float constantVelocityMagnitude;
+    public int damage;
 
     void Start()
     {

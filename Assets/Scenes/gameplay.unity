@@ -334,7 +334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchAfterStart: 0
   initialDirection: 45
-  speedFactor: 5
+  speedFactor: 7.5
+  damage: 30
 --- !u!61 &114236037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1942,7 +1943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6b3ad12d437b649b77bd3f4553d73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddle: {fileID: 0}
+  paddle: {fileID: 1859937537}
 --- !u!1 &1307497894
 GameObject:
   m_ObjectHideFlags: 0

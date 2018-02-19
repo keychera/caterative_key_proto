@@ -31,7 +31,6 @@ public class BrickEventManager : Singleton<BrickEventManager>
                 }
             }
         }
-		Debug.Log(closestBrick.gameObject.name);
         return closestBrick;
     }
 

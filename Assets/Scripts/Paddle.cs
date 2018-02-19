@@ -8,7 +8,7 @@ public class Paddle : MonoBehaviour
     Rigidbody2D body;
     public float speed = 5f;
     public float launchDirection;
-	public Ball ballToLaunch;
+    public Ball ballToLaunch;
     public LineRenderer targetLine;
 
     void Start()
@@ -36,13 +36,13 @@ public class Paddle : MonoBehaviour
         }
         if (ballToLaunch != null)
         {
-			targetLine.positionCount = 2;
+            targetLine.positionCount = 2;
             launchDirection = 90 + ((transform.position.x / 2) * -45);
-			Vector2 originalBallLocation = new Vector2(
-				transform.position.x * 1.25f,
-				transform.position.y + 0.2f
-			);
-			ballToLaunch.transform.position = originalBallLocation;
+            Vector2 originalBallLocation = new Vector2(
+                transform.position.x * 1.25f,
+                transform.position.y + 0.2f
+            );
+            ballToLaunch.transform.position = originalBallLocation;
             targetLine.SetPosition(0, originalBallLocation);
             Vector2 launchVector = Transformation.RotateVector(Vector2.right, launchDirection);
             int layerMask = LayerMask.GetMask("Default");
@@ -50,14 +50,17 @@ public class Paddle : MonoBehaviour
             if (hit.collider != null)
             {
                 targetLine.SetPosition(1, hit.point);
-            } else {
-				targetLine.SetPosition(1, launchVector*10);
-			}
+            }
+            else
+            {
+                targetLine.SetPosition(1, launchVector * 10);
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                ballToLaunch.LaunchTowardsAngle(launchDirection);
+                ballToLaunch = null;
+                targetLine.positionCount = 0;
+            }
         }
-		if (Input.GetKeyUp(KeyCode.Space)) {
-			ballToLaunch.LaunchTowardsAngle(launchDirection);
-			ballToLaunch = null;
-			targetLine.positionCount = 0;
-		}
     }
 }
