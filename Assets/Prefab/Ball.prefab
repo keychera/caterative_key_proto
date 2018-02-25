@@ -195,8 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchAfterStart: 0
   initialDirection: 45
-  speedFactor: 7.5
-  damage: 30
+  speedFactor: 4
+  damage: 15
   active: 0
 --- !u!212 &212372631463928412
 SpriteRenderer:

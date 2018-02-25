@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
     Health playerHealth;
     Paddle paddle;
+    public Text loseText;
 
     void Awake()
     {
@@ -14,15 +16,19 @@ public class GameManager : Singleton<GameManager>
         paddle = FindObjectOfType<Paddle>();
     }
 
-    void Start() {
+    void Start()
+    {
+        loseText.gameObject.SetActive(false);
         ReadyTheBall();
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         DamageZone.OnBallLoss += RestartBall;
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         DamageZone.OnBallLoss -= RestartBall;
     }
 
@@ -36,9 +42,18 @@ public class GameManager : Singleton<GameManager>
         playerHealth.ModifyHealth(damage);
     }
 
-    public void RestartBall(Ball ball) {
+    public void RestartBall(Ball ball)
+    {
         GameManager.Instance.ModifyPlayerHelth(-1 * ball.damage);
-        ball.Deactivate();
-        GameManager.Instance.ReadyTheBall();
+        if (playerHealth.health > 0)
+        {
+            ball.Deactivate();
+            GameManager.Instance.ReadyTheBall();
+        }
+        else
+        {
+            paddle.gameObject.SetActive(false);
+            loseText.gameObject.SetActive(true);
+        }
     }
 }

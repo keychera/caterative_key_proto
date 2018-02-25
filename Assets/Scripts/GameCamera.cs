@@ -20,6 +20,10 @@ public class GameCamera : Singleton<GameCamera>
         BrickManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
     }
 
+    void Start() {
+        UpdateRelativePositionsToBrick(BrickManager.Instance.GetClosestBrick());
+    }
+ 
     void Update()
     {
         float partialDistanceToTarget = Vector2.Distance(transform.position, targetPosition) * 0.1f;

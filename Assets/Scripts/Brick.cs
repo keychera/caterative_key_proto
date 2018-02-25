@@ -17,7 +17,6 @@ public class Brick : MonoBehaviour
     void Start()
     {
 		active = true;
-        body.velocity = Vector2.down * 0.2f;
         transform.localRotation = Quaternion.Euler(0,0,Random.Range(45,135));
     }
 
