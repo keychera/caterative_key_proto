@@ -6,7 +6,7 @@ public class BallManager : Singleton<BallManager>
 {
     List<Ball> balls;
 
-    void Start()
+    void Awake()
     {
         balls = new List<Ball>(GetComponentsInChildren<Ball>());
         foreach (var ball in balls)

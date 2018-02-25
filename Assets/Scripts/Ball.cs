@@ -60,8 +60,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-/* 
-for constant velocity
+
     void Update() {
         constantVelocity = body.velocity;
         if (constantVelocity.magnitude != constantVelocityMagnitude) {
@@ -71,5 +70,5 @@ for constant velocity
 
     void LateUpdate() {
         body.velocity = constantVelocity;
-    }*/
+    }
 }

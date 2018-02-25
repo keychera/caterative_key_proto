@@ -35,28 +35,34 @@ public class Paddle : MonoBehaviour
         {
             body.velocity = Vector2.zero;
         }
-        launchDirection = 90 + ((transform.position.x / 2) * -45);
-        Vector2 originalBallLocation = new Vector2(
-            transform.position.x * 1.25f,
-            transform.position.y + 0.2f
-        );
-        targetLine.SetPosition(0, originalBallLocation);
-        Vector2 launchVector = Transformation.RotateVector(Vector2.right, launchDirection);
-        int layerMask = LayerMask.GetMask("Default");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, launchVector, 100, layerMask);
-        if (hit.collider != null)
-        {
-            targetLine.SetPosition(1, hit.point);
-        }
-        else
-        {
-            targetLine.SetPosition(1, launchVector * 10);
-        }
         if (ballToLaunch != null)
         {
-            ballToLaunch.transform.position = originalBallLocation;
-            ballToLaunch.LaunchTowardsAngle(launchDirection);
-            ballToLaunch = null;
+            launchDirection = 90 + ((transform.position.x / 2) * -45);
+            Vector2 originalBallLocation = new Vector2(
+                transform.position.x * 1.25f,
+                transform.position.y + 0.2f
+            );
+            targetLine.positionCount = 2;
+            targetLine.SetPosition(0, originalBallLocation);
+            Vector2 launchVector = Transformation.RotateVector(Vector2.right, launchDirection);
+            int layerMask = LayerMask.GetMask("Default");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, launchVector, 100, layerMask);
+            if (hit.collider != null)
+            {
+                targetLine.SetPosition(1, hit.point);
+            }
+            else
+            {
+                targetLine.SetPosition(1, launchVector * 10);
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                ballToLaunch.transform.position = originalBallLocation;
+                ballToLaunch.LaunchTowardsAngle(launchDirection);
+                ballToLaunch = null;
+            }
+        } else {
+            targetLine.positionCount = 0;
         }
     }
 }
