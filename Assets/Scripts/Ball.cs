@@ -13,7 +13,6 @@ public class Ball : MonoBehaviour
     private Vector2 constantVelocity;
     private float constantVelocityMagnitude;
     public int damage;
-    private float slowFactor = 0.1f;
     public bool active = false;
     TrailRenderer trail;
 
@@ -34,14 +33,15 @@ public class Ball : MonoBehaviour
         trail.Clear();
         trail.enabled = true;
         body.velocity = Vector2.zero;
-        Vector2 directionVector = Transformation.RotateVector(Vector2.right,direction);
+        Vector2 directionVector = Transformation.RotateVector(Vector2.right, direction);
         constantVelocity = (directionVector * speedFactor);
         constantVelocityMagnitude = constantVelocity.magnitude;
         body.velocity = constantVelocity;
         trail.time = body.velocity.magnitude * 0.25f;
     }
 
-    public void Deactivate() {
+    public void Deactivate()
+    {
         active = false;
         trail.enabled = false;
         body.velocity = Vector2.zero;
@@ -51,24 +51,29 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         trail.time = body.velocity.magnitude * 0.25f;
-        if (body.velocity.magnitude < 1f) {
+        if (body.velocity.magnitude < 1f)
+        {
             Deactivate();
         }
-        Brick brick = collision.gameObject.GetComponent<Brick>();
-        if (brick != null && brick.red) {
-            GameManager.Instance.ModifyPlayerHelth(15);
+        Brick collidedBrick = collision.gameObject.GetComponent<Brick>();
+        if (collidedBrick != null)
+        {
+            BallManager.Instance.InvokeOnBallCollide(this,collidedBrick);
         }
     }
 
 
-    void Update() {
+    void Update()
+    {
         constantVelocity = body.velocity;
-        if (constantVelocity.magnitude != constantVelocityMagnitude) {
+        if (constantVelocity.magnitude != constantVelocityMagnitude)
+        {
             constantVelocity = constantVelocity.normalized * (speedFactor);
         }
     }
 
-    void LateUpdate() {
+    void LateUpdate()
+    {
         body.velocity = constantVelocity;
     }
 }
