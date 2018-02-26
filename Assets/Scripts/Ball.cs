@@ -2,74 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using caterative.math;
+using Caterative.Math;
 
-public class Ball : MonoBehaviour
+namespace Caterative.Brick.Balls
 {
-    Rigidbody2D body;
-    public bool launchAfterStart;
-    public float initialDirection = 45f;
-    public float speedFactor = 5f;
-    private Vector2 constantVelocity;
-    private float constantVelocityMagnitude;
-    public int damage;
-    public bool active = false;
-    TrailRenderer trail;
-
-    void Awake()
+    public class Ball : MonoBehaviour
     {
-        body = GetComponent<Rigidbody2D>();
-        trail = GetComponent<TrailRenderer>();
-        trail.enabled = false;
-        if (launchAfterStart)
+        Rigidbody2D body;
+        public float speedFactor = 5f;
+        public int damage;
+        internal bool active = false;
+        TrailRenderer trail;
+        Vector2 constantVelocity;
+        float constantVelocityMagnitude;
+
+        void Awake()
         {
-            LaunchTowardsAngle(initialDirection);
+            body = GetComponent<Rigidbody2D>();
+            trail = GetComponent<TrailRenderer>();
+            trail.enabled = false;
         }
-    }
 
-    public void LaunchTowardsAngle(float direction)
-    {
-        active = true;
-        trail.Clear();
-        trail.enabled = true;
-        body.velocity = Vector2.zero;
-        Vector2 directionVector = Transformation.RotateVector(Vector2.right, direction);
-        constantVelocity = (directionVector * speedFactor);
-        constantVelocityMagnitude = constantVelocity.magnitude;
-        body.velocity = constantVelocity;
-        trail.time = body.velocity.magnitude * 0.25f;
-    }
-
-    public void Deactivate()
-    {
-        active = false;
-        trail.enabled = false;
-        body.velocity = Vector2.zero;
-        transform.position = Vector2.right * 1000;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        trail.time = body.velocity.magnitude * 0.25f;
-        Brick collidedBrick = collision.gameObject.GetComponent<Brick>();
-        if (collidedBrick != null)
+        public void LaunchTowardsAngle(float direction)
         {
-            BallManager.Instance.InvokeOnBallCollide(this,collidedBrick);
+            active = true;
+            trail.Clear();
+            trail.enabled = true;
+            body.velocity = Vector2.zero;
+            Vector2 directionVector = Transformation.RotateVector(Vector2.right, direction);
+            constantVelocity = (directionVector * speedFactor);
+            constantVelocityMagnitude = constantVelocity.magnitude;
+            body.velocity = constantVelocity;
+            trail.time = body.velocity.magnitude * 0.25f;
         }
-    }
 
-
-    void Update()
-    {
-        constantVelocity = body.velocity;
-        if (constantVelocity.magnitude != constantVelocityMagnitude)
+        public void Deactivate()
         {
-            constantVelocity = constantVelocity.normalized * (speedFactor);
+            active = false;
+            trail.enabled = false;
+            body.velocity = Vector2.zero;
+            transform.position = Vector2.right * 1000;
         }
-    }
 
-    void LateUpdate()
-    {
-        body.velocity = constantVelocity;
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            trail.time = body.velocity.magnitude * 0.25f;
+            ICollidable collidedCollidable = collision.gameObject.GetComponent<ICollidable>();
+            if (collidedCollidable != null)
+            {
+                BallManager.Instance.InvokeOnBallCollide(this, collidedCollidable);
+                collidedCollidable.OnCollideWithBall(this);
+            }
+        }
+
+
+        void Update()
+        {
+            constantVelocity = body.velocity;
+            if (constantVelocity.magnitude != constantVelocityMagnitude)
+            {
+                constantVelocity = constantVelocity.normalized * (speedFactor);
+            }
+        }
+
+        void LateUpdate()
+        {
+            body.velocity = constantVelocity;
+        }
     }
 }

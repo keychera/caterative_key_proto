@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Caterative.Brick.Destroyable;
 
 public class GameCamera : Singleton<GameCamera>
 {
@@ -14,17 +15,17 @@ public class GameCamera : Singleton<GameCamera>
 
     void OnEnable()
     {
-        BrickManager.OnBrickDestroy += UpdateRelativePositionsToBrick;
+        DestroyableManager.OnDestroyableDestroy += UpdateRelativePositionsToBrick;
     }
 
     void OnDisable()
     {
-        BrickManager.OnBrickDestroy -= UpdateRelativePositionsToBrick;
+        DestroyableManager.OnDestroyableDestroy -= UpdateRelativePositionsToBrick;
     }
 
     void Start()
     {
-        UpdateRelativePositionsToBrick(BrickManager.Instance.GetClosestBrick());
+        UpdateRelativePositionsToBrick(DestroyableManager.Instance.GetClosestDestroyable());
     }
 
     void Update()
@@ -51,13 +52,13 @@ public class GameCamera : Singleton<GameCamera>
         }
     }
 
-    private void UpdateRelativePositionsToBrick(Brick whichBrick)
+    private void UpdateRelativePositionsToBrick(Destroyable whichDestroyable)
     {
-        if (whichBrick != null)
+        if (whichDestroyable != null)
         {
             noTarget = false;
-            if (whichBrick.transform.position.y - transform.position.y > 2)
-            targetPosition = new Vector3(0, whichBrick.transform.position.y - 2, -10);
+            if (whichDestroyable.transform.position.y - transform.position.y > 2)
+            targetPosition = new Vector3(0, whichDestroyable.transform.position.y - 2, -10);
         }
         else
         {

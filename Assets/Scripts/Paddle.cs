@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using caterative.math;
+using Caterative.Math;
+using Caterative.Brick.Balls;
 
 public class Paddle : MonoBehaviour
 {

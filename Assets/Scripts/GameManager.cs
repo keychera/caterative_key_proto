@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Caterative.Brick.Balls;
 
 public class GameManager : Singleton<GameManager>
 {

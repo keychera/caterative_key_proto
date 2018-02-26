@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Caterative.Brick.Balls;
 
 public class DamageZone : Singleton<DamageZone>
 {

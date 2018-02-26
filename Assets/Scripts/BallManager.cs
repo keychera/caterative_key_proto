@@ -3,41 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallManager : Singleton<BallManager>
+
+namespace Caterative.Brick.Balls
 {
-    List<Ball> balls;
-    public delegate void BallCollideEvent(Ball whichBall, Brick whichBrick);
-    public static event BallCollideEvent OnBallCollide;
-
-    void Awake()
+    public class BallManager : Singleton<BallManager>
     {
-        balls = new List<Ball>(GetComponentsInChildren<Ball>());
-        foreach (var ball in balls)
-        {
-            ball.Deactivate();
-        }
-    }
+        List<Ball> balls;
+        public delegate void BallCollideEvent(Ball whichBall, ICollidable whichCollidable);
+        public static event BallCollideEvent OnBallCollide;
 
-    public Ball GetAvailableBall()
-    {
-        Ball availableBall = null;
-        int i = 0;
-        while (availableBall == null && i < balls.Count)
+        void Awake()
         {
-            if (balls[i].active == false)
+            balls = new List<Ball>(GetComponentsInChildren<Ball>());
+            foreach (var ball in balls)
             {
-                availableBall = balls[i];
+                ball.Deactivate();
             }
-            i++;
         }
-        return availableBall;
-    }
 
-    internal void InvokeOnBallCollide(Ball ball, Brick collidedBrick)
-    {
-        if (OnBallCollide != null) {
-            OnBallCollide(ball,collidedBrick);
+        public Ball GetAvailableBall()
+        {
+            Ball availableBall = null;
+            int i = 0;
+            while (availableBall == null && i < balls.Count)
+            {
+                if (balls[i].active == false)
+                {
+                    availableBall = balls[i];
+                }
+                i++;
+            }
+            return availableBall;
         }
-        collidedBrick.Damage();
+
+        internal void InvokeOnBallCollide(Ball ball, ICollidable collidable)
+        {
+            if (OnBallCollide != null)
+            {
+                OnBallCollide(ball, collidable);
+            }
+        }
     }
 }

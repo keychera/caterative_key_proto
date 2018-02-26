@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace caterative.math
+namespace Caterative.Math
 {
     class Transformation
     {

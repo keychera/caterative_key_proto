@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
-  health: 5
+  health: 60
 --- !u!212 &212151764537222126
 SpriteRenderer:
   m_ObjectHideFlags: 1
