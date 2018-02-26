@@ -24,7 +24,6 @@ public class BallManager : Singleton<BallManager>
         int i = 0;
         while (availableBall == null && i < balls.Count)
         {
-            Debug.Log(balls[i].active);
             if (balls[i].active == false)
             {
                 availableBall = balls[i];
