@@ -7,25 +7,32 @@ public class Brick : MonoBehaviour
     public bool active;
     Rigidbody2D body;
     SpriteRenderer sprite;
+    public int health = 5;
 
-    void Awake() {
+    void Awake()
+    {
         body = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
-		active = true;
+        active = true;
     }
 
-    public void Destroy()
+    public void Damage()
     {
-        active = false;
-        transform.position = Vector2.right * 1000;
-        BrickManager.Instance.InvokeOnBrickDestroy(this);
+        health--;
+        if (health <= 0)
+        {
+            active = false;
+            transform.position = Vector2.right * 1000;
+            BrickManager.Instance.InvokeOnBrickDestroy(this);
+        }
     }
 
-    public void Put(Vector3 position) {
+    public void Put(Vector3 position)
+    {
         active = true;
         transform.position = position;
     }

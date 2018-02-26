@@ -9,9 +9,9 @@ public class Arena : MonoBehaviour {
 
 	void Start() {
 		wallL.transform.localScale = new Vector3(2,height,1);
-		wallL.transform.localPosition = new Vector2(-3,(height-10)/2);
+		wallL.transform.localPosition = new Vector2(-3.5f,(height-10)/2);
 		wallR.transform.localScale = new Vector3(2,height,1);
-		wallR.transform.localPosition = new Vector2(3,(height-10)/2);
+		wallR.transform.localPosition = new Vector2(3.5f,(height-10)/2);
 		wallU.transform.position = new Vector3(0,(height/2) + 0.5f + (height-10)/2,0);
 	}
 }

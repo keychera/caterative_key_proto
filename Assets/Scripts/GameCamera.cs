@@ -37,10 +37,8 @@ public class GameCamera : Singleton<GameCamera>
                 maxDistancePerFrame : partialDistanceToTarget
             ;
             Vector3 newPosition = Vector3.MoveTowards(
-                (Vector2)transform.position, targetPosition, distancePerFrame * Time.deltaTime
+                transform.position, targetPosition, distancePerFrame * Time.deltaTime
             );
-            newPosition = new Vector3(newPosition.x, newPosition.y, -10);
-            Debug.Log(newPosition);
             transform.position = newPosition;
             for (int i = 0; i < objectsRelativeToCamera.Count; i++)
             {
@@ -58,7 +56,8 @@ public class GameCamera : Singleton<GameCamera>
         if (whichBrick != null)
         {
             noTarget = false;
-            targetPosition = new Vector3(0, whichBrick.transform.position.y, -10);
+            if (whichBrick.transform.position.y - transform.position.y > 2)
+            targetPosition = new Vector3(0, whichBrick.transform.position.y - 2, -10);
         }
         else
         {

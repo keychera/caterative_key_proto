@@ -51,10 +51,6 @@ public class Ball : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         trail.time = body.velocity.magnitude * 0.25f;
-        if (body.velocity.magnitude < 1f)
-        {
-            Deactivate();
-        }
         Brick collidedBrick = collision.gameObject.GetComponent<Brick>();
         if (collidedBrick != null)
         {

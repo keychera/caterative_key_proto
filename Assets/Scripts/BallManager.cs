@@ -38,6 +38,6 @@ public class BallManager : Singleton<BallManager>
         if (OnBallCollide != null) {
             OnBallCollide(ball,collidedBrick);
         }
-        collidedBrick.Destroy();
+        collidedBrick.Damage();
     }
 }
